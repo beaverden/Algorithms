@@ -1,4 +1,5 @@
 class BigInt {
+    
     private:
         string number;
         //Helper functions
