@@ -52,33 +52,33 @@ private :
     }
 
     static string eliminateWhiteSpaces(string s, int *error) {
-    while (s.length()>1 && s.find("  ") != -1) {
-        s.erase(s.find("  "),2);
-    }
-    while (s.find(" ") != -1) {
-        int i = s.find(" ");
-        if (i>0 && i<s.length()-1) {
-            if (!okSpace(s[i-1]) && !okSpace(s[i+1])) {
-                *error = 1;
-                return "0";
-            }
-        }
-        s.erase(i, 1);
-    }
-    return s;
-}
+		while (s.length()>1 && s.find("  ") != -1) {
+			s.erase(s.find("  "),2);
+		}
+		while (s.find(" ") != -1) {
+			int i = s.find(" ");
+			if (i>0 && i<s.length()-1) {
+				if (!okSpace(s[i-1]) && !okSpace(s[i+1])) {
+					*error = 1;
+					return "0";
+				}
+			}
+			s.erase(i, 1);
+		}
+		return s;
+	}
 
     static string addBrackets(string s) {
-    int i = 0;
-    while (i<s.length()) {
-        if (i<s.length()-1 && isOp(s[i]) && isOp(s[i+1])) {
-            string f = s.substr(0,i+1);
-            return f + "(" + addBrackets(s.substr(i+1,s.length()-i-1)) + ")";
-        }
-        i++;
-    }
-    return s;
-}
+		int i = 0;
+		while (i<s.length()) {
+			if (i<s.length()-1 && isOp(s[i]) && isOp(s[i+1])) {
+				string f = s.substr(0,i+1);
+				return f + "(" + addBrackets(s.substr(i+1,s.length()-i-1)) + ")";
+			}
+			i++;
+		}
+		return s;
+	}
 
     static long double eval(string s, int* error) {
         int len = s.length();
