@@ -1,3 +1,8 @@
+/***
+	Correctly evaluates expressions involving any <6 byte floating point numbers and
+	oppertions "+", "-", "*", "/", "sin", "cos" and brackets
+***/
+
 class Evaluator {
 private :
     static bool okSpace(char c) {
