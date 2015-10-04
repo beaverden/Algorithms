@@ -1,3 +1,8 @@
+/***
+A library that does some operations with BigIntegers like addition 
+(non-negative), substraction, multiplying and dividing by a integer number.
+***/
+
 class BigInt {
     
     private:
