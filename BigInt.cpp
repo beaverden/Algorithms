@@ -1,10 +1,10 @@
 /***
 A library that does some operations with BigIntegers like addition 
-(non-negative), substraction, multiplying and dividing by a integer number.
+(non-negative), substraction, multiplying, dividing and dividing by a integer number.
 ***/
 
 class BigInt {
-    
+
     private:
         string number;
         //Helper functions
@@ -44,6 +44,9 @@ class BigInt {
         string val() {
             return number;
         }
+        void setVal(string s){
+            number = s;
+        }
         int compare(BigInt that) {
             if (this->length() > that.length()) return 1;
             else if (this->length() < that.length()) return -1;
@@ -72,8 +75,8 @@ class BigInt {
             return BigInt(c);
         }
         //Works for positive integers
-        BigInt divLongToShort(BigInt that) {
-            string a = number, b = that.val();
+        BigInt divToShort(int that) {
+            string a = number, b = toString(that);
             string res = "";
             int val = atoi(b.c_str()), x = 0, k = 0;
             for (int i = 0; i<a.length(); i++) {
@@ -89,7 +92,7 @@ class BigInt {
             while (res[0] == '0' && res.length()>1) res.erase(0,1);
             return BigInt(res);
         }
-        BigInt longProd(BigInt that) {
+        BigInt multiply(BigInt that) {
             string a = number, b = that.val();
             int res[2500]={0},shift=0;
             reverse(a.begin(),a.end());
@@ -123,7 +126,7 @@ class BigInt {
             while (fin[0]=='0' && fin.length()>1) fin.erase(0,1);
             return BigInt(fin);
         }
-        BigInt longSubstract(BigInt that) {
+        BigInt substract(BigInt that) {
             string a = number, b = that.val();
             while (a.length()<b.length()) a='0'+a;
             while (b.length()<a.length()) b='0'+b;
@@ -150,5 +153,20 @@ class BigInt {
             if (neg>0) res="-"+res;
             return BigInt(res);
         }
-
+        BigInt div(BigInt that) {
+            BigInt a(this->number);
+            if (a.compare(that)<0) return BigInt("0");
+            BigInt l("1"), r = a, last;
+            while (l.compare(r)<=0) {
+                BigInt mid = l.add(r).divToShort(2);
+                BigInt t = mid.multiply(that);
+                if (t.compare(a) <= 0) {
+                    last.setVal(mid.val());
+                    l = mid.add(BigInt("1"));
+                } else {
+                    r = mid.substract(BigInt("1"));
+                }
+            }
+            return last;
+        }
 };
