@@ -1,6 +1,6 @@
 /***
 A library that does some operations with BigIntegers like addition 
-(non-negative), substraction, multiplying, dividing and taking modulus.
+(non-negative), substraction, multiplying, dividing, taking modulus, gcd and lcm;
 ***/
 
 class BigInt {
@@ -239,5 +239,16 @@ class BigInt {
             cp %= that;
             return cp;
         }
-
+        static BigInt gcd(BigInt a, BigInt b) {
+            BigInt zero("0");
+            while (b>zero) {
+                BigInt t = b;
+                b = a%b;
+                a = t;
+            }
+            return a;
+        }
+		static BigInt lcm(BigInt a, BigInt b) {
+            return (a*b)/gcd(a,b);
+        }
 };
