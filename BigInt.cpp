@@ -85,8 +85,7 @@ class BigInt {
             return cp;
         }
         BigInt& operator++(){
-            BigInt one("1");
-            *this += one;
+            *this += 1;
             return *this;
         }
         BigInt& operator-=(BigInt& that) {
@@ -128,8 +127,7 @@ class BigInt {
             return cp;
         }
         BigInt& operator--(){
-            BigInt one("1");
-            *this -= one;
+            *this -= 1;
             return *this;
         }
         BigInt& operator*=(BigInt& that) {
