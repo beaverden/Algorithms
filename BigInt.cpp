@@ -1,10 +1,9 @@
 /***
 A library that does some operations with BigIntegers like addition 
-(non-negative), substraction, multiplying, dividing and dividing by a integer number.
+(non-negative), substraction, multiplying, dividing and taking modulus.
 ***/
 
 class BigInt {
-
     private:
         string number;
         //Helper functions
@@ -17,15 +16,7 @@ class BigInt {
             }
             return res;
         }
-        int comp(string a, string b) {
-            if (a.length()>b.length()) return 1;
-            else if (b.length()>a.length()) return -1;
-            else if (a>b) return 1;
-            else if (a<b) return -1;
-            return 0;
-        }
     public:
-
         BigInt(string s) {
             number = s;
         }
@@ -47,16 +38,24 @@ class BigInt {
         void setVal(string s){
             number = s;
         }
-        int compare(BigInt that) {
-            if (this->length() > that.length()) return 1;
-            else if (this->length() < that.length()) return -1;
-            else if (this->number > that.number) return 1;
-            else if (this->number < that.number) return -1;
-            return 0;
+        inline bool operator==(BigInt& lhs){ return (this->val()==lhs.val());}
+        inline bool operator!=(BigInt& lhs){return !(lhs==*this); }
+        inline bool operator< (BigInt& lhs){
+            if (this->length()<lhs.length()) return true;
+            else if (this->length()>lhs.length()) return false;
+            else if (this->val()<lhs.val()) return true;
+            return false;
+        }
+        inline bool operator>(BigInt& lhs){return lhs<*this; }
+        inline bool operator<=(BigInt& lhs){return !(*this>lhs); }
+        inline bool operator>=(BigInt& lhs){return !(*this<lhs); }
+        BigInt& operator=(BigInt that) {
+            this->setVal(that.val());
+            return *this;
         }
         //Works only for positive integers
-        BigInt add (BigInt that) {
-            string a = number, b = that.number;
+        BigInt& operator+=(BigInt& that) {
+            string a = this->number, b = that.number;
             reverse(a.begin(), a.end());
             reverse(b.begin(), b.end());
             while (a.length() < b.length()) a += "0";
@@ -72,29 +71,70 @@ class BigInt {
             }
             if (r != 0) c += (char)( r + '0');
             reverse(c.begin(), c.end());
-            return BigInt(c);
+            this->setVal(c);
+            return *this;
         }
-        //Works for positive integers
-        BigInt divToShort(int that) {
-            string a = number, b = toString(that);
-            string res = "";
-            int val = atoi(b.c_str()), x = 0, k = 0;
-            for (int i = 0; i<a.length(); i++) {
-                int g = (a[i] - '0');
-                if (g == 0 && x == 0) { res += "0"; continue; }
-                x = x * 10 + g;
-                if (x < val && k == 0 && i<a.length()-1) continue;
-                k = 1;
-                res += toString(x/val);
-                x %= val;
+        BigInt& operator+=(int that) {
+            BigInt t(that);
+            *this += t;
+            return *this;
+        }
+        BigInt operator+(BigInt& that) {
+            BigInt cp = *this;
+            cp += that;
+            return cp;
+        }
+        BigInt& operator++(){
+            BigInt one("1");
+            *this += one;
+            return *this;
+        }
+        BigInt& operator-=(BigInt& that) {
+            string a = this->val(), b = that.val();
+            while (a.length()<b.length()) a='0'+a;
+            while (b.length()<a.length()) b='0'+b;
+            int borrow = 0, neg = 0;
+            if (a<b) { swap(a,b); neg = 1; }
+            reverse(a.begin(),a.end());
+            reverse(b.begin(),b.end());
+            string res;
+            for (int i = 0; i < a.length(); i++) {
+                int x = a[i]-'0',
+                    y = b[i]-'0',
+                    z=0;
+                if (x-borrow<y) {
+                    z=(10+x-y-borrow);
+                    if (borrow == 0) borrow++;
+                } else {
+                    z=x-borrow-y;
+                    borrow=0;
+                }
+                res+=(char)(z+'0');
             }
-
-            while (res[0] == '0' && res.length()>1) res.erase(0,1);
-            return BigInt(res);
+            reverse(res.begin(),res.end());
+            while (res[0]=='0' && res.length()>1) res.erase(0,1);
+            if (neg>0) res="-"+res;
+            this->setVal(res);
+            return *this;
         }
-        BigInt multiply(BigInt that) {
-            string a = number, b = that.val();
-            int res[2500]={0},shift=0;
+        BigInt& operator-=(int that) {
+            BigInt t(that);
+            *this -= t;
+            return *this;
+        }
+        BigInt operator-(BigInt& that) {
+            BigInt cp = *this;
+            cp -= that;
+            return cp;
+        }
+        BigInt& operator--(){
+            BigInt one("1");
+            *this -= one;
+            return *this;
+        }
+        BigInt& operator*=(BigInt& that) {
+            string a = this->val(), b = that.val();
+            int res[10000]={0},shift=0;
             reverse(a.begin(),a.end());
             reverse(b.begin(),b.end());
             if (a.length()<b.length()) swap(a,b);
@@ -124,49 +164,82 @@ class BigInt {
             string fin;
             for (int i=finlen;i>=0;i--) fin+=(char)(res[i]+'0');
             while (fin[0]=='0' && fin.length()>1) fin.erase(0,1);
-            return BigInt(fin);
+            this->setVal(fin);
+            return *this;
         }
-        BigInt substract(BigInt that) {
-            string a = number, b = that.val();
-            while (a.length()<b.length()) a='0'+a;
-            while (b.length()<a.length()) b='0'+b;
-            int borrow = 0, neg = 0;
-            if (comp(a,b)<0) { swap(a,b); neg = 1; }
-            reverse(a.begin(),a.end());
-            reverse(b.begin(),b.end());
-            string res;
-            for (int i = 0; i < a.length(); i++) {
-                int x = a[i]-'0',
-                    y = b[i]-'0',
-                    z=0;
-                if (x-borrow<y) {
-                    z=(10+x-y-borrow);
-                    if (borrow == 0) borrow++;
-                } else {
-                    z=x-borrow-y;
-                    borrow=0;
-                }
-                res+=(char)(z+'0');
+        BigInt& operator*=(int that) {
+            BigInt t(that);
+            *this *= t;
+            return *this;
+        }
+        BigInt operator*(BigInt& that) {
+            BigInt cp = *this;
+            cp *= that;
+            return cp;
+        }
+        BigInt& operator/=(BigInt& that) {
+            BigInt one("1");
+            if (*this<that) {
+                this->setVal("0");
+                return *this;
             }
-            reverse(res.begin(),res.end());
-            while (res[0]=='0' && res.length()>1) res.erase(0,1);
-            if (neg>0) res="-"+res;
-            return BigInt(res);
-        }
-        BigInt div(BigInt that) {
-            BigInt a(this->number);
-            if (a.compare(that)<0) return BigInt("0");
-            BigInt l("1"), r = a, last;
-            while (l.compare(r)<=0) {
-                BigInt mid = l.add(r).divToShort(2);
-                BigInt t = mid.multiply(that);
-                if (t.compare(a) <= 0) {
-                    last.setVal(mid.val());
-                    l = mid.add(BigInt("1"));
+            BigInt l("1"), r = *this, last;
+            while (l<=r) {
+                BigInt mid = l+r;
+                mid = mid/2;
+                BigInt t = mid * that;
+                if (t <= *this) {
+                    last = mid;
+                    l = mid + one;
                 } else {
-                    r = mid.substract(BigInt("1"));
+                    r = mid - one;
                 }
             }
-            return last;
+            this->setVal(last.val());
+            return *this;
         }
+        BigInt& operator/=(int that) {
+            string a = this->number;
+            string res = "";
+            int val = that, x = 0, k = 0;
+            for (int i = 0; i<a.length(); i++) {
+                int g = (a[i] - '0');
+                if (g == 0 && x == 0) { res += "0"; continue; }
+                x = x * 10 + g;
+                if (x < val && k == 0 && i<a.length()-1) continue;
+                k = 1;
+                res += toString(x/val);
+                x %= val;
+            }
+            while (res[0] == '0' && res.length()>1) res.erase(0,1);
+            this->setVal(res);
+            return *this;
+        }
+        BigInt operator/(BigInt that) {
+            BigInt cp = *this;
+            cp /= that;
+            return cp;
+        }
+        BigInt operator/(int that) {
+            BigInt cp = *this;
+            cp /= that;
+            return cp;
+        }
+        BigInt& operator%=(BigInt& that) {
+            BigInt dv = *this/that;
+            BigInt prod = dv*that;
+            *this -= prod;
+            return *this;
+        }
+        BigInt& operator%=(int that) {
+            BigInt t(that);
+            *this %= t;
+            return *this;
+        }
+        BigInt operator%(BigInt& that) {
+            BigInt cp = *this;
+            cp %= that;
+            return cp;
+        }
+
 };
