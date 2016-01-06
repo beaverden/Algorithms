@@ -28,3 +28,4 @@ Language - C++, Python
 * Subfactorial
 * A small class for expression evaluation
 * Lower Bound
+* Binary powering
