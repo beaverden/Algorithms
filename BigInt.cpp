@@ -7,15 +7,6 @@ class BigInt {
     private:
         string number;
         //Helper functions
-        string toString(int a) {
-            string res = "";
-            if (a == 0) res = "0";
-            while (a>0) {
-                res = (char)(a % 10 + '0') + res;
-                a/=10;
-            }
-            return res;
-        }
     public:
         BigInt(string s) {
             number = s;
@@ -38,9 +29,19 @@ class BigInt {
         void setVal(string s){
             number = s;
         }
+        string toString(int a) {
+            string res = "";
+            if (a == 0) res = "0";
+            while (a>0) {
+                res = (char)(a % 10 + '0') + res;
+                a/=10;
+            }
+            return res;
+        }
+
         inline bool operator==(BigInt& lhs){ return (this->val()==lhs.val());}
         inline bool operator!=(BigInt& lhs){return !(lhs==*this); }
-        inline bool operator< (BigInt& lhs){
+        inline bool operator<(BigInt& lhs){
             if (this->length()<lhs.length()) return true;
             else if (this->length()>lhs.length()) return false;
             else if (this->val()<lhs.val()) return true;
@@ -56,15 +57,13 @@ class BigInt {
         //Works only for positive integers
         BigInt& operator+=(BigInt& that) {
             string a = this->number, b = that.number;
-            reverse(a.begin(), a.end());
-            reverse(b.begin(), b.end());
-            while (a.length() < b.length()) a += "0";
-            while (b.length() < a.length()) b += "0";
+            while (a.length() < b.length()) a = "0" + a;
+            while (b.length() < a.length()) b = "0" + b;
             string c;
             int r = 0, t;
             for(int i = 0; i<a.length(); i++) {
-                int x = (a[i] - '0'),
-                    y = (b[i] - '0');
+                int x = (a[a.length()-i-1] - '0'),
+                    y = (b[a.length()-i-1] - '0');
                 t = x+y+r;
                 c += (char)( (t % 10) + '0');
                 r = t/10;
@@ -90,16 +89,14 @@ class BigInt {
         }
         BigInt& operator-=(BigInt& that) {
             string a = this->val(), b = that.val();
-            while (a.length()<b.length()) a='0'+a;
-            while (b.length()<a.length()) b='0'+b;
+            while (a.length() < b.length()) a = "0" + a;
+            while (b.length() < a.length()) b = "0" + b;
             int borrow = 0, neg = 0;
             if (a<b) { swap(a,b); neg = 1; }
-            reverse(a.begin(),a.end());
-            reverse(b.begin(),b.end());
             string res;
             for (int i = 0; i < a.length(); i++) {
-                int x = a[i]-'0',
-                    y = b[i]-'0',
+                int x = a[a.length()-i-1]-'0',
+                    y = b[a.length()-i-1]-'0',
                     z=0;
                 if (x-borrow<y) {
                     z=(10+x-y-borrow);
@@ -133,8 +130,6 @@ class BigInt {
         BigInt& operator*=(BigInt& that) {
             string a = this->val(), b = that.val();
             int res[10000]={0},shift=0;
-            reverse(a.begin(),a.end());
-            reverse(b.begin(),b.end());
             if (a.length()<b.length()) swap(a,b);
             int lenA = a.length(),
                 lenB = b.length(),
@@ -142,8 +137,8 @@ class BigInt {
             for (int i=0;i<lenB;i++) {
                 int rem = 0,z=shift;
                 for (int j=0;j<lenA;j++) {
-                    int x = b[i]-'0',
-                        y = a[j]-'0';
+                    int x = b[lenB-i-1]-'0',
+                        y = a[lenA-j-1]-'0';
                     int prod = x*y+rem+res[z];
                     res[z]=prod%10;
                     rem=prod/10;
@@ -248,7 +243,7 @@ class BigInt {
             }
             return a;
         }
-		static BigInt lcm(BigInt a, BigInt b) {
+        static BigInt lcm(BigInt a, BigInt b) {
             return (a*b)/gcd(a,b);
         }
 };

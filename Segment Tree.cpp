@@ -1,16 +1,24 @@
-void build(int n) {
-    for (int i=n-1;i>0;--i)
-            t[i]=t[i<<1]+t[i<<1|1];
-}
-void modify(int p, int value) {
-    for (t[p+=n]=value; p > 1; p >>= 1) t[p>>1] = t[p] + t[p^1];
-}
-__int64 sum(int l,int r) {
-    __int64 res = 0;
-    l+=n; r+=n;
-    for (; l<r; l>>=1, r>>=1) {
-        if (l&1) res=res+t[l++];
-        if (r&1) res=res+t[--r];
+const int maxN = 3*1e5;
+int ar[maxN],n;
+struct min_segment_tree {
+    int t[maxN], n;
+    void build(int a[], int m) {
+        this->n = m;
+        for (int i = n; i<2*n; i++) t[i] = a[i-n];
+        for (int i = n-1; i>0; i--) t[i] = min(t[i<<1], t[i<<1|1]);
     }
-    return res;
-}
+    int query(int l, int r) {
+        int m = inf;
+        for ( l+=n, r+=n; l<r; l>>=1, r>>=1) {
+            if (l&1) {
+                m = min(m,t[l]);
+                l++;
+            }
+            if (r&1) {
+                r--;
+                m = min(m,t[r]);
+            }
+        }
+        return m;
+    }
+} tree;
