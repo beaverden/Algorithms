@@ -22,7 +22,9 @@ Language - C++, Python
 * Polygon area
 * Quadratic equation solver
 * Red Black Tree
-* Maximum Segment Tree
+* Segment Tree
+  * Max-min segment tree
 * Stack
 * Subfactorial
 * A small class for expression evaluation
+* Lower Bound
