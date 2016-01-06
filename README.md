@@ -1,5 +1,6 @@
 # Algorithms
 Some template algorithms for competitive programming
+
 Language - C++, Python
 
 ## Current list of algorithms included
