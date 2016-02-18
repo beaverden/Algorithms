@@ -7,7 +7,8 @@ Language - C++, Python
 
 ## Current list of algorithms included
 
-* BigInteger Library in one file 
+* **BigInteger Library in one file**
+_(please consider that some of the functions work with ARRAYS, so you might want to keep in mind the length of the numbers that you're trying to fit in)_
   * Addition
   * Division
   * Product
@@ -15,20 +16,20 @@ Language - C++, Python
   * Modulus
   * GCD
   * LCM
-* Circle intersection area
-* Convex Hull (Jarvis Algorithm)
-* Disjoint Set Union (DSU)
-* Distance point-segment
-* A small fractions class
-* Heap
-* Polygon area
-* Quadratic equation solver
-* Red Black Tree
-* Segment Tree
+* **Circle intersection area**
+* **Convex Hull (Jarvis Algorithm)**
+* **Disjoint Set Union (DSU)**
+* **Distance point-segment**
+* **A small fractions class**
+* **Heap**
+* **Polygon area**
+* **Quadratic equation solver**
+* **Red Black Tree**
+* **Segment Tree**
   * Max-min segment tree
-* Stack
-* Subfactorial
-* A small class for expression evaluation
-* Lower Bound
-* Upper Bound
-* Binary powering
+* **Stack**
+* **Subfactorial**
+* **A small class for expression evaluation**
+* **Lower Bound**
+* **Upper Bound**
+* **Binary powering**
