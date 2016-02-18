@@ -1,9 +1,9 @@
-int findInd(int p) {
+int lower_bound(int val, vector <int> v, int maxSize) {
     int l = 0,
-        r = n;
+        r = maxSize;
     while (l<r) {
         int mid = (l+r)/2;
-        if (a[mid] < p) l = mid + 1;
+        if (v[mid] < val) l = mid + 1;
         else r = mid;
     }
     return l;
