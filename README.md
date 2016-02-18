@@ -1,6 +1,8 @@
 # Algorithms
 Some template algorithms for competitive programming
 
+*Please note that most of them are my implementations based on the examples, videos, courses from the whole internet. I cannot assure anyone that those algorithm implementations are completly working in any situations, although I can state that practiacally all of them have been tested on real problems with strong and comprehensive tests.*
+
 Language - C++, Python
 
 ## Current list of algorithms included
