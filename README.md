@@ -33,3 +33,4 @@ _(please consider that some of the functions work with ARRAYS, so you might want
 * **Lower Bound**
 * **Upper Bound**
 * **Binary powering**
+* **Sieve of Eratosthenes**
