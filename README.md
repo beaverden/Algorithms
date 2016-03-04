@@ -35,10 +35,10 @@ _(please consider that some of the functions work with ARRAYS, so you might want
 * **Binary powering**
 * **Sieve of Eratosthenes**
 * **Chess functions (Checks if a certain figure can move from A to B in one move)**
-  *Bishop*
-  *Knight*
-  *Queen*
-  *Rook*
-  *Pawn*
-  *King*
-  *Cell color*
+  *Bishop
+  *Knight
+  *Queen
+  *Rook
+  *Pawn
+  *King
+  *Cell color
