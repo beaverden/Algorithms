@@ -3,8 +3,7 @@ bool sameColor(int x1, int y1, int x2, int y2) {
 }
 
 bool color(int x, int y) {
-    if ( (x+y)% 2 == 0 ) return 0; //Black
-    if ( (x+y)% 2 != 0 ) return 1; //White
+    return (x+y)%2; // 0 - Black, 1 - White
 }
 
 bool rook(int x1, int y1, int x2, int y2) {
