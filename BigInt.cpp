@@ -7,6 +7,16 @@ class BigInt {
     private:
         string number;
         //Helper functions
+        string toString(int a) {
+            string res = "";
+            if (a == 0) res = "0";
+            while (a>0) {
+                res = (char)(a % 10 + '0') + res;
+                a/=10;
+            }
+            return res;
+        }
+
     public:
         BigInt(string s) {
             number = s;
@@ -29,33 +39,26 @@ class BigInt {
         void setVal(string s){
             number = s;
         }
-        string toString(int a) {
-            string res = "";
-            if (a == 0) res = "0";
-            while (a>0) {
-                res = (char)(a % 10 + '0') + res;
-                a/=10;
-            }
-            return res;
+
+        /* -1 less
+            1 bigger
+            0 equal
+            */
+        int compare(BigInt that) {
+            if (this->length()<that.length()) return -1;
+            else if (this->length()>that.length()) return 1;
+            else if (this->val()<that.val()) return -1;
+            else if (this->val()>that.val()) return 1;
+            return 0;
+        }
+        int compare(int that) {
+            BigInt BigThat(that);
+            return compare(BigThat);
         }
 
-        inline bool operator==(BigInt& lhs){ return (this->val()==lhs.val());}
-        inline bool operator!=(BigInt& lhs){return !(lhs==*this); }
-        inline bool operator<(BigInt& lhs){
-            if (this->length()<lhs.length()) return true;
-            else if (this->length()>lhs.length()) return false;
-            else if (this->val()<lhs.val()) return true;
-            return false;
-        }
-        inline bool operator>(BigInt& lhs){return lhs<*this; }
-        inline bool operator<=(BigInt& lhs){return !(*this>lhs); }
-        inline bool operator>=(BigInt& lhs){return !(*this<lhs); }
-        BigInt& operator=(BigInt that) {
-            this->setVal(that.val());
-            return *this;
-        }
+
         //Works only for positive integers
-        BigInt& operator+=(BigInt& that) {
+        BigInt add(BigInt that) {
             string a = this->number, b = that.number;
             while (a.length() < b.length()) a = "0" + a;
             while (b.length() < a.length()) b = "0" + b;
@@ -70,24 +73,15 @@ class BigInt {
             }
             if (r != 0) c += (char)( r + '0');
             reverse(c.begin(), c.end());
-            this->setVal(c);
-            return *this;
+            BigInt res(c);
+            return res;
         }
-        BigInt& operator+=(int that) {
-            BigInt t(that);
-            *this += t;
-            return *this;
+        BigInt add(int that) {
+            BigInt BigThat(that);
+            return this->add(BigThat);
         }
-        BigInt operator+(BigInt& that) {
-            BigInt cp = *this;
-            cp += that;
-            return cp;
-        }
-        BigInt& operator++(){
-            *this += 1;
-            return *this;
-        }
-        BigInt& operator-=(BigInt& that) {
+
+        BigInt substract(BigInt that) {
             string a = this->val(), b = that.val();
             while (a.length() < b.length()) a = "0" + a;
             while (b.length() < a.length()) b = "0" + b;
@@ -110,24 +104,16 @@ class BigInt {
             reverse(res.begin(),res.end());
             while (res[0]=='0' && res.length()>1) res.erase(0,1);
             if (neg>0) res="-"+res;
-            this->setVal(res);
-            return *this;
+
+            BigInt result(res);
+            return result;
         }
-        BigInt& operator-=(int that) {
-            BigInt t(that);
-            *this -= t;
-            return *this;
+        BigInt substract(int that) {
+            BigInt BigThat(that);
+            return this->substract(BigThat);
         }
-        BigInt operator-(BigInt& that) {
-            BigInt cp = *this;
-            cp -= that;
-            return cp;
-        }
-        BigInt& operator--(){
-            *this -= 1;
-            return *this;
-        }
-        BigInt& operator*=(BigInt& that) {
+
+        BigInt multiply(BigInt that) {
             string a = this->val(), b = that.val();
             int res[10000]={0},shift=0;
             if (a.length()<b.length()) swap(a,b);
@@ -157,41 +143,35 @@ class BigInt {
             string fin;
             for (int i=finlen;i>=0;i--) fin+=(char)(res[i]+'0');
             while (fin[0]=='0' && fin.length()>1) fin.erase(0,1);
-            this->setVal(fin);
-            return *this;
+
+            BigInt result(fin);
+            return result;
         }
-        BigInt& operator*=(int that) {
-            BigInt t(that);
-            *this *= t;
-            return *this;
+        BigInt multiply(int that) {
+            BigInt BigThat(that);
+            return this->multiply(BigThat);
         }
-        BigInt operator*(BigInt& that) {
-            BigInt cp = *this;
-            cp *= that;
-            return cp;
-        }
-        BigInt& operator/=(BigInt& that) {
-            BigInt one("1");
-            if (*this<that) {
-                this->setVal("0");
-                return *this;
+
+        BigInt divide(BigInt that) {
+            if (this->compare(that) < 0) {
+                BigInt res(0);
+                return res;
             }
             BigInt l("1"), r = *this, last;
-            while (l<=r) {
-                BigInt mid = l+r;
-                mid = mid/2;
-                BigInt t = mid * that;
-                if (t <= *this) {
+            while (l.compare(r) <= 0) {
+                BigInt mid = l.add(r);
+                mid = mid.divide(2);
+                BigInt t = mid.multiply(that);
+                if (t.compare(*this) <= 0) {
                     last = mid;
-                    l = mid + one;
+                    l = mid.add(1);
                 } else {
-                    r = mid - one;
+                    r = mid.substract(1);
                 }
             }
-            this->setVal(last.val());
-            return *this;
+            return last;
         }
-        BigInt& operator/=(int that) {
+        BigInt divide(int that) {
             string a = this->number;
             string res = "";
             int val = that, x = 0, k = 0;
@@ -205,45 +185,35 @@ class BigInt {
                 x %= val;
             }
             while (res[0] == '0' && res.length()>1) res.erase(0,1);
-            this->setVal(res);
-            return *this;
+
+            BigInt result(res);
+            return result;
         }
-        BigInt operator/(BigInt that) {
-            BigInt cp = *this;
-            cp /= that;
-            return cp;
+
+        BigInt modulus(BigInt that) {
+            BigInt dv = this->divide(that);
+            BigInt prod = dv.multiply(that);
+            BigInt result = this->substract(prod);
+            return result;
         }
-        BigInt operator/(int that) {
-            BigInt cp = *this;
-            cp /= that;
-            return cp;
+        BigInt modulus(int that) {
+            BigInt dv = this->divide(that);
+            BigInt prod = dv.multiply(that);
+            BigInt result = this->substract(prod);
+            return result;
         }
-        BigInt& operator%=(BigInt& that) {
-            BigInt dv = *this/that;
-            BigInt prod = dv*that;
-            *this -= prod;
-            return *this;
-        }
-        BigInt& operator%=(int that) {
-            BigInt t(that);
-            *this %= t;
-            return *this;
-        }
-        BigInt operator%(BigInt& that) {
-            BigInt cp = *this;
-            cp %= that;
-            return cp;
-        }
+
+
         static BigInt gcd(BigInt a, BigInt b) {
             BigInt zero("0");
-            while (b>zero) {
+            while (b.compare(0) > 0) {
                 BigInt t = b;
-                b = a%b;
+                b = a.modulus(b);
                 a = t;
             }
             return a;
         }
         static BigInt lcm(BigInt a, BigInt b) {
-            return (a*b)/gcd(a,b);
+            return a.multiply(b).divide(gcd(a,b));
         }
 };
