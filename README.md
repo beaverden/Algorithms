@@ -42,3 +42,4 @@ _(please consider that some of the functions work with ARRAYS, so you might want
   * Pawn
   * King
   * Cell color
+* **Converter from number system X to Y**
