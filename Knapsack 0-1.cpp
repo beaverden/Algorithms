@@ -1,6 +1,9 @@
-//INPUT - a vector containing pairs <weight, price> of every item
-//		- the maximum allowed weight
-//OUTPUT - a vector containing the indexes of the items included in the knapsack
+/** INPUT
+	(items) - a vector containing pairs <weight, price> of every item
+	(w) - the maximum allowed weight
+	OUTPUT 
+	(result) - a vector containing the indexes of the items included in the knapsack
+**/
 
 const int maxN = 500;
 const int maxW = 500;
