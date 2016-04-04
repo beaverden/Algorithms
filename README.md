@@ -44,3 +44,5 @@ _(please consider that some of the functions work with ARRAYS, so you might want
   * Cell color
 * **Converter from number system X to Y**
 * **Polymonial multiply**
+* **Stirling numbers of the second kind**
+* **Knapsack 0-1**
