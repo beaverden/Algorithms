@@ -47,3 +47,4 @@ _(please consider that some of the functions work with ARRAYS, so you might want
 * **Stirling numbers of the second kind**
 * **Knapsack 0-1**
 * **BFS**
+* **Queue**
