@@ -3,9 +3,8 @@ void merge(int left, int mid, int right, int arr[]) {
     int n1 = mid - left + 1;
     int n2 =  right - mid;
 
-    int left_array[maxN],
-        right_array[maxN];
-
+	int left_array[n1], right_array[n2];
+	
     for (i = 0; i < n1; i++)
         left_array[i] = arr[left + i];
     for (j = 0; j < n2; j++)
