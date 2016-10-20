@@ -48,3 +48,6 @@ _(please consider that some of the functions work with ARRAYS, so you might want
 * **Knapsack 0-1**
 * **BFS**
 * **Queue**
+* **QuickSort**
+* **MergeSort**
+* **BinaryTree**
