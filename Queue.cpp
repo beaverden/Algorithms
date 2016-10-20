@@ -31,7 +31,10 @@ struct queue {
             last = nullptr;
         } else {
             val = first->val;
-            first = first->next;
+            node *temp = first->next;
+            delete first;
+            first = temp;
+            temp = nullptr;
         }
         size--;
         return val;
