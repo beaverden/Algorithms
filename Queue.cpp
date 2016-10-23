@@ -27,6 +27,7 @@ struct queue {
         int val;
         if (size == 1) {
             val = first->val;
+			delete first;
             first = nullptr;
             last = nullptr;
         } else {
