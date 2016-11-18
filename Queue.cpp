@@ -1,12 +1,16 @@
+template <typename T>
 struct queue {
+    typedef T value_type;
+
     struct node {
-        int val;
+        value_type val;
         node *next = nullptr;
     };
+
     node *first;
     node *last;
     int size = 0;
-    void push(int val) {
+    void push(value_type val) {
         if (size == 0) {
             first = new node;
             first->val = val;
@@ -19,12 +23,8 @@ struct queue {
         size++;
     }
 
-    int pop() {
-        if (size == 0) {
-            return -1;
-        }
-
-        int val;
+    value_type pop() {
+        value_type val;
         if (size == 1) {
             val = first->val;
 			delete first;
@@ -41,23 +41,11 @@ struct queue {
         return val;
     }
 
-    int front() {
-        if (size == 0) {
-            return -1;
-        } else {
-            return first->val;
-        }
+    value_type front() {
+        return first->val;
     }
 
     bool empty() {
         return (size == 0);
-    }
-
-    void show() {
-        node *temp = first;
-        while (temp != nullptr) {
-            printf("%d ", temp->val);
-            temp = temp->next;
-        }
     }
 };
