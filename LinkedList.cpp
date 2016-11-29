@@ -127,14 +127,25 @@ class LinkedList
 			return returnValue;
 		}
 
+		//Returns the nth element of the list
+		T get(int n)
+		{
+			int k = 0;
+			node *it = this->first;
+			while (it && k < n)
+			{
+				it = it->next;
+				k++;
+			}
+			return it->val;
 
-		//Returns the size of the list
+		}
+
 		int size() 
 		{
 			return this->length;
 		}
 
-		//Returns whether the list is empty or not
 		bool empty()
 		{
 			return (this->length == 0);
