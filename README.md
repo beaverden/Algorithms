@@ -51,3 +51,4 @@ _(please consider that some of the functions work with ARRAYS, so you might want
 * **QuickSort**
 * **MergeSort**
 * **BinaryTree**
+* **Generic LinkedList**
