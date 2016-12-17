@@ -17,14 +17,14 @@ public:
         return find(this->root, x);
     }
 
-    int lower_bound(T x)
+    int count_less(T x)
     {
-        return lower_bound(this->root, x);
+        return count_less(this->root, x);
     }
 
-    int upper_bound(T x)
+    int count_greater_or_equal(T x)
     {
-        return size(root) - lower_bound(x);
+        return size(root) - count_less(x);
     }
 
 private:
@@ -134,7 +134,7 @@ private:
     }
 
 
-    int lower_bound(node *h, int x)
+    int count_less(node *h, int x)
     {
         if (h == nullptr)
         {
@@ -142,11 +142,11 @@ private:
         }
         if (x >= h->value)
         {
-            return 1 + size(h->left) + lower_bound(h->right, x);
+            return 1 + size(h->left) + count_less(h->right, x);
         }
         else
         {
-            return lower_bound(h->left, x);
+            return count_less(h->left, x);
         }
     }
 
