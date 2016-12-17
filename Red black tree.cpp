@@ -2,6 +2,11 @@ template <class T>
 class RedBlackTree
 {
 public:
+    RedBlackTree()
+    {
+        this->root = nullptr;
+    }
+
     void add(T x)
     {
         root = add(this->root, x);
@@ -33,7 +38,7 @@ private:
         int subtree_size = 0;
     };
 
-    node *root = nullptr;
+    node *root;
 
     bool isRed(node *h)
     {
