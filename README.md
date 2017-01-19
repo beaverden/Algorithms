@@ -7,6 +7,19 @@ Language - C++, Python
 
 ## Current list of algorithms included
 
+* **Data structures**
+  * Generic LinkedList
+  * Queue
+  * Stack
+  * Red Black Tree
+  * Genetic <Key, Value> Map
+  * Segment Tree
+  * Genetic Vector (close to STL implementation)
+  * Disjoint Set Union (DSU)
+  * BinaryTree
+  * Heap
+  
+  
 * **BigInteger Library in one file**
 _(please consider that some of the functions work with ARRAYS, so you might want to keep in mind the length of the numbers that you're trying to fit in)_
   * Addition
@@ -16,24 +29,12 @@ _(please consider that some of the functions work with ARRAYS, so you might want
   * Modulus
   * GCD
   * LCM
-* **Circle intersection area**
-* **Convex Hull (Jarvis Algorithm)**
-* **Disjoint Set Union (DSU)**
-* **Distance point-segment**
-* **A small fractions class**
-* **Heap**
-* **Polygon area**
-* **Quadratic equation solver**
-* **Red Black Tree**
-* **Segment Tree**
-  * Max-min segment tree
-* **Stack**
-* **Subfactorial**
-* **A small class for expression evaluation**
-* **Lower Bound**
-* **Upper Bound**
-* **Binary powering**
-* **Sieve of Eratosthenes**
+  
+* **Algorithms**  
+  * Convex Hull (Jarvis Algorithm)
+
+
+
 * **Chess functions (Checks if a certain figure can move from A to B in one move)**
   * Bishop
   * Knight
@@ -42,16 +43,36 @@ _(please consider that some of the functions work with ARRAYS, so you might want
   * Pawn
   * King
   * Cell color
-* **Converter from number system X to Y**
-* **Polymonial multiply**
-* **Stirling numbers of the second kind**
+
+  
+* **Sorting**
+  * Quicksort
+  * MergeSort 
+ 
+ 
+* **Divide and conquer finding**
+  * Lower bound
+  * Upper bound
+ 
+ 
+* **Math**
+  * Binary powering
+  * Quadratic equation solver
+  * Polygon area 
+  * Converter from number system X to Y
+  * Polymonial multiply
+  * Stirling numbers of the second kind
+  * Class for expression evaluation
+  * Subfactorial (.py)
+  * Fractions class 
+  * Sieve of Eratosthenes (primes)
+  * Circle intersection area  
+  * Distance point-segment
+   
+   
+* **Graph theory**
+  * BFS
+  * Kosaraju algorithm for SCC
+
+
 * **Knapsack 0-1**
-* **BFS**
-* **Queue**
-* **QuickSort**
-* **MergeSort**
-* **BinaryTree**
-* **Generic LinkedList**
-* **Genetic Vector (close to STL implementation)**
-* **Genetic <Key, Value> Map**
-* **Kosaraju algorithm for SCC finding**
