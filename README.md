@@ -52,3 +52,6 @@ _(please consider that some of the functions work with ARRAYS, so you might want
 * **MergeSort**
 * **BinaryTree**
 * **Generic LinkedList**
+* **Genetic Vector (close to STL implementation)**
+* **Genetic <Key, Value> Map**
+* **Kosaraju algorithm for SCC finding**
