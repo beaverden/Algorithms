@@ -18,6 +18,7 @@ Language - C++, Python
   * Disjoint Set Union (DSU)
   * BinaryTree
   * Heap
+  * Trie
   
   
 * **BigInteger Library in one file**
@@ -68,6 +69,7 @@ _(please consider that some of the functions work with ARRAYS, so you might want
   * Sieve of Eratosthenes (primes)
   * Circle intersection area  
   * Distance point-segment
+  * Modular divide
    
    
 * **Graph theory**
